@@ -326,7 +326,7 @@ uid=0(root) gid=0(root) groups=0(root)
 ### Стабілізація TTY
 
 ```bash
-python3 -c 'import pty; pty.spawn("/bin/bash")'
+python3 -c 'import pty; pty.spawn("/bin/sh")'
 ```
 
 `Ctrl+Z`, у Kali:
