@@ -9,7 +9,7 @@ Here's the English translation of the writeup:
 
 ---
 
-## TL;DR
+## 
 
 The subdomain `staging.silentium.htb` hosts **Flowise 3.0.5** with two vulnerabilities: unauthenticated password reset (CVE-2025-58434) and RCE (CVE-2025-59528). Through them we get **root inside a Docker container**, from which we extract the password `r04D!!_R4ge` from environment variables for the SSH user `ben`. Next — Gogs on `127.0.0.1:3001`, we exploit **CVE-2025-8110** and get **root on the host** (Gogs runs with `RUN_USER = root`).
 
