@@ -16,7 +16,7 @@
 ### Nmap
 
 ```bash
-nmap -sC -sV -p- --min-rate 5000 10.129.144.227
+nmap -T4 -A -v silentium.htb
 ```
 
 ```
