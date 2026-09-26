@@ -16,7 +16,7 @@
 ### Nmap
 
 ```bash
-nmap -T4 -A -v silentium.htb
+nmap -T4 -A -v 10.129.144.227
 ```
 
 ```
