@@ -39,11 +39,7 @@ PORT   STATE SERVICE VERSION
 echo "10.129.245.216 devhub.htb" | sudo tee -a /etc/hosts
 ```
 
-### 1.2 Веб-перечисление
-
-```bash
-gobuster dir -u http://devhub.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
-```
+### 1.2 Веб
 
 Находим приложение **MCPJam Inspector** на порту **6274** (упоминается в JS/HTML или обнаруживается сканированием портов):
 
